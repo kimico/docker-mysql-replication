@@ -46,11 +46,11 @@ mysqldump \
   | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 
 echo mysqldump completed.
-
 echo Starting slave ...
 mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "START SLAVE;"
 
 echo Initial health check:
+sleep $REPLICATION_HEALTH_GRACE_PERIOD
 check_slave_health
 
 echo Waiting for health grace period and slave to be still healthy:
