@@ -31,19 +31,7 @@ mysql -uroot -p$MYSQL_ROOT_PASSWORD -e "RESET MASTER; \
   MASTER_USER='$REPLICATION_USER', \
   MASTER_PASSWORD='$REPLICATION_PASSWORD';"
 
-mysqldump \
-  --protocol=tcp \
-  --user=$REPLICATION_USER \
-  --password=$REPLICATION_PASSWORD \
-  --host=$MASTER_HOST \
-  --port=$MASTER_PORT \
-  --hex-blob \
-  --all-databases \
-  --add-drop-database \
-  --master-data \
-  --flush-logs \
-  --flush-privileges \
-  | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+zcat /data/initdata.sql.gz | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 
 echo mysqldump completed.
 echo Starting slave ...
